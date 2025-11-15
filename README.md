@@ -2,68 +2,68 @@
 
 Woolf University. GoIT Neoversity. Computer Systems. Homework #6
 
-## Опис проекту
+## Project Description
 
-Вебдодаток з HTTP-сервером та Socket-сервером для обробки повідомлень з форми та збереження їх у MongoDB.
+Web application with HTTP server and Socket server for processing form messages and saving them to MongoDB.
 
-### Основні компоненти:
+### Main Components:
 
-1. **HTTP-сервер** (порт 3000) - обслуговує веб-сторінки та статичні ресурси
-2. **Socket-сервер** (порт 5000) - приймає дані з форми через UDP протокол
-3. **MongoDB** - зберігає повідомлення з міткою часу
+1. **HTTP Server** (port 3000) - serves web pages and static resources
+2. **Socket Server** (port 5000) - receives form data via UDP protocol
+3. **MongoDB** - stores messages with timestamps
 
-## Структура проекту
+## Project Structure
 
 ```
 goit-cs-hw-06/
-├── main.py              # Основний файл з HTTP та Socket серверами
-├── Dockerfile           # Конфігурація Docker образу
-├── docker-compose.yaml  # Конфігурація Docker Compose
-├── requirements.txt     # Залежності Python
-└── front/              # Статичні файли
-    ├── index.html      # Головна сторінка
-    ├── message.html    # Сторінка з формою
-    ├── error.html      # Сторінка помилки 404
-    ├── style.css       # Стилі CSS
-    └── logo.png        # Логотип
+├── main.py              # Main file with HTTP and Socket servers
+├── Dockerfile           # Docker image configuration
+├── docker-compose.yaml  # Docker Compose configuration
+├── requirements.txt     # Python dependencies
+└── front/              # Static files
+    ├── index.html      # Home page
+    ├── message.html    # Page with form
+    ├── error.html      # 404 error page
+    ├── style.css       # CSS styles
+    └── logo.png        # Logo
 ```
 
-## Запуск проекту
+## Running the Project
 
-### За допомогою Docker Compose (рекомендовано):
+### Using Docker Compose (recommended):
 
 ```bash
 docker-compose up
 ```
 
-Або в фоновому режимі:
+Or in detached mode:
 
 ```bash
 docker-compose up -d
 ```
 
-### Зупинка:
+### Stop:
 
 ```bash
 docker-compose down
 ```
 
-### Зупинка з видаленням volumes:
+### Stop with volume removal:
 
 ```bash
 docker-compose down -v
 ```
 
-## Доступ до додатку
+## Application Access
 
-Після запуску додаток буде доступний за адресою:
+After launching, the application will be available at:
 
--   Головна сторінка: http://localhost:3000
--   Форма відправки повідомлень: http://localhost:3000/message.html
+-   Home page: http://localhost:3000
+-   Message submission form: http://localhost:3000/message.html
 
-## Формат даних у MongoDB
+## MongoDB Data Format
 
-Повідомлення зберігаються у базі даних `messages_db` в колекції `messages` у такому форматі:
+Messages are stored in the `messages_db` database in the `messages` collection in the following format:
 
 ```json
 {
@@ -73,41 +73,41 @@ docker-compose down -v
 }
 ```
 
-## Перевірка даних у MongoDB
+## Checking Data in MongoDB
 
-Підключитися до MongoDB контейнера:
+Connect to MongoDB container:
 
 ```bash
 docker exec -it <mongodb_container_id> mongosh
 ```
 
-Переглянути повідомлення:
+View messages:
 
 ```javascript
 use messages_db
 db.messages.find().pretty()
 ```
 
-## Технічні деталі
+## Technical Details
 
--   **HTTP-сервер**: використовує вбудовані модулі Python `http.server`
--   **Socket-сервер**: використовує UDP протокол для отримання даних
--   **Багатопроцесність**: HTTP та Socket сервери працюють у різних процесах
--   **MongoDB**: дані зберігаються поза контейнером завдяки Docker volumes
--   **Порти**:
-    -   3000: HTTP-сервер
-    -   5000: Socket-сервер (UDP)
-    -   27017: MongoDB
+-   **HTTP Server**: uses built-in Python `http.server` modules
+-   **Socket Server**: uses UDP protocol for receiving data
+-   **Multithreading**: HTTP and Socket servers run in different threads
+-   **MongoDB**: data is stored outside the container thanks to Docker volumes
+-   **Ports**:
+    -   3000: HTTP server
+    -   5000: Socket server (UDP)
+    -   27018: MongoDB (mapped to avoid conflicts)
 
-## Вимоги
+## Requirements
 
 -   Docker
 -   Docker Compose
 
-## Особливості реалізації
+## Implementation Features
 
-1. Всі сервери запускаються з одного файлу `main.py`
-2. HTTP та Socket сервери працюють у різних процесах
-3. Обробляються всі статичні ресурси (CSS, PNG)
-4. При помилці 404 повертається сторінка error.html
-5. Дані з MongoDB зберігаються у volume, тому не втрачаються при перезапуску контейнера
+1. All servers are launched from a single `main.py` file
+2. HTTP and Socket servers run in different threads
+3. All static resources are handled (CSS, PNG)
+4. On 404 error, error.html page is returned
+5. MongoDB data is stored in a volume, so it persists after container restart
